@@ -1,20 +1,60 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import MenuButton from "./MenuButton"
+import MenuButton from "./MenuButton";
+import { connect } from 'react-redux';
 
-export default function Main(props) {
-  return (
-    <View style={styles.container}>
+
+ 
+class Main extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      datas: ""
+    }
+  }
+ 
+
+  componentDidMount() {
+    
+    // this.props.dispatch({type: "FIRSTNAME", value: "Lyann"})
+    if (this.props.firstName.val.length === 0) {
+      this.props.navigation.navigate('LogIn')
+    }
+    
+  }
+  
+   render() {
+  console.log(this.props);
+  
+    //  console.log("!!!!!!!!!!!!!!!!!"+JSON.parse(this.state.datas));
+     return (
+      <View style={styles.container}>
       <View style={styles.header} >
-      <MenuButton navigation={props.navigation} />
+      <MenuButton navigation={this.props.navigation} />
         <Text style={styles.title}>SECU-ALERT</Text>
       </View>
 
       <Text style={styles.text}>HomeScreen</Text>
     </View>
-  );
+     )
+   }
+ }
+ 
+
+const mapStateToProps = (state) => {
+  return {
+    firstName: state.firstName,
+    lastName: state.lastName,
+    password: state.password,
+    mail: state.email,
+    nickName: state.nickName
+
+    // password: state.password,
+    // mail: state.mail,
+    // nickName: state.nickName,
+  }
 }
 
 
@@ -45,3 +85,5 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
+
+export default connect(mapStateToProps)(Main)

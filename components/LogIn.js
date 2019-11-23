@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, AsyncStorage, Modal, TouchableHighlight } from 'react-native';
-import { Button, Overlay } from 'react-native-elements';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
 import InputsLogin from './InputsLogin';
 import firebase from "firebase";
 import { connect } from 'react-redux';
+import { connectButtonStyleLogIn, connectContainerStyleLogIn, mainContainerLogIn } from '../assets/css/styles';
 import AlertModal from './AlertModal'
 
 class LogIn extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             mail: '',
             password: '',
@@ -17,16 +18,17 @@ class LogIn extends Component {
             isVisible: false,
             errorLoginType: ''
         }
-        this.onPressConnection = this.onPressConnection.bind(this)
+        this.inputs = React.createRef();
+        this.onPressConnection = this.onPressConnection.bind(this);
         this.removeModal = this.removeModal.bind(this);
     }
-    //extract Datas from the 'InputsLogin.js' component.
+
     extractDatasFromInputs = (inputName, inputValue) => {
         this.setState({ [inputName]: inputValue })
     }
-    //When the user press the 'Connection' button.
+   
     onPressConnection = () => {
-        const { dispatch, navigation } = this.props;
+        const { navigation } = this.props;
 
         this.setState({ isLoading: true });
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -34,51 +36,58 @@ class LogIn extends Component {
                 return firebase.auth().signInWithEmailAndPassword(await this.state.mail, await this.state.password);
             })
             .catch(function (error) {
+                this.inputs.current.clearInput()
+                
                 this.setState({
                     isVisible: true,
+                    isLoading: false,
                     errorLoginType: error.code,
                 })
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log("The log in operation has been aborted due to code: " + errorCode);
-                console.log("Message: " + errorMessage);
             }.bind(this));
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                console.log("User is connected");
+                this.inputs.current.clearInput()
+                
+                this.setState({isLoading: false})
                 navigation.navigate("Home");
-            } else {
-                console.log("user is not connected");
             }
-        });
+        }.bind(this));
     }
 
     removeModal() {
         this.setState({ isVisible: false });
-        console.log("removing Modal");
     }
 
     render() {
         const { errorLoginType, isVisible } = this.state;
+        
+        
 
         return (
-            <View style={styles.container}>
+            <View style={mainContainerLogIn}>
 
                 <AlertModal
                     isVisible={isVisible}
                     removeModal={() => this.removeModal}
                     type={errorLoginType}
                 />
-                <InputsLogin dataExtractor={(inputName, inputValue) => { this.extractDatasFromInputs(inputName, inputValue) }} />
+                <InputsLogin ref={this.inputs} dataExtractor={(inputName, inputValue) => { this.extractDatasFromInputs(inputName, inputValue) }} />
                 <Button
-                    style={styles.buttonConnection}
+                    containerStyle={connectContainerStyleLogIn}
+                    buttonStyle={connectButtonStyleLogIn}
                     loading={this.state.isLoading}
                     title="Connect"
                     onPress={() => {
                         this.onPressConnection();
                     }}
                 />
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
+                <Text style={{color: 'white', textAlign: 'center'}}>Not registered yet ?</Text>
+                </TouchableOpacity>
+                
             </View>
         )
     }
@@ -90,20 +99,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#20232A',
-        padding: "10%"
-    },
-    overlayContainer: {
-        backgroundColor: "red",
-        width: "100%",
-        height: "5%",
-    },
-    buttonConnection : {
-        
-    }
-});
+
 
 export default connect(mapStateToProps)(LogIn)

@@ -4806,6 +4806,11 @@ react-native-status-bar-height@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.4.0.tgz#de8cee4bb733a196167210d2d0bc1fa10acba3e3"
   integrity sha512-pWvZFlyIHiuxLugLioq97vXiaGSovFXEyxt76wQtbq0gxv4dGXMPqYow46UmpwOgeJpBhqL1E0EKxnfJRrFz5w==
 
+react-native-tooltip@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-tooltip/-/react-native-tooltip-5.2.0.tgz#4358ea1e9bdcb49dad28bf5881440b0182927422"
+  integrity sha512-3mbPGd/VDfb3dUZmdmgg4eE8idJU4OyYM9ItGifnofz+Cz50Aua+sVGo2Ecc7zHV0S+kM0mOyLL758hhTz2gDw==
+
 react-native-view-shot@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"

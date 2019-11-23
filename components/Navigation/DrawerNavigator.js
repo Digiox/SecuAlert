@@ -7,6 +7,7 @@ import Notifs from "../Notifs"
 import Main from "../Main";
 import Settings from "../Settings";
 import LogIn from "../LogIn"
+import Register from "../Register"
 import MenuDrawer from "./MenuDrawer"
 
 const WIDTH = Dimensions.get('window').width;
@@ -30,6 +31,9 @@ const DrawerNavigator = createDrawerNavigator(
         },
         LogIn: {
             screen: LogIn
+        },
+        Register: {
+            screen: Register
         }
 },
 DrawerConfig

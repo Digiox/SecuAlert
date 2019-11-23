@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, View, AppRegistry } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
-
 import {
     inputsContainerLogin,
     logInTextStyle,
@@ -10,24 +9,13 @@ import {
     textinputLogInIconStyle
 } from '../assets/css/styles';
 
-export default class InputsLogin extends Component {
-    constructor() {
-        super()
-        this.passInput = React.createRef();
-    }
-
-    clearInput() {
-        this.passInput.current.clear();
-    }
+export default class InputsRegister extends Component {
     render() {
-
         return (
             <View style={inputsContainerLogin}>
-               
-                <Text selectable={true} style={logInTextStyle}>Log in</Text>
+                <Text style={logInTextStyle}>Register</Text>
                 <View style={textinputsContainer}>
                     <Input
-                        selectable={true}
                         keyboardType={"email-address"}
                         autoCapitalize='none'
                         onChangeText={(text) => this.props.dataExtractor('mail', text)}
@@ -40,6 +28,15 @@ export default class InputsLogin extends Component {
                             size={24}
                             color='white'
                         />}
+                    />
+                </View>
+                <View style={textinputsContainer}>
+                    <Input
+                        keyboardType={"email-address"}
+                        autoCapitalize='none'
+                        onChangeText={(text) => this.props.dataExtractor('confirmMail', text)}
+                        inputStyle={{ ...logInTextinputStyle, marginLeft: "20%" }}
+                        placeholder='Confirm email'
                     />
                 </View>
                 <View style={textinputsContainer}>
@@ -59,10 +56,17 @@ export default class InputsLogin extends Component {
                         />}
                     />
                 </View>
-
+                <View style={textinputsContainer}>
+                    <Input
+                        autoCapitalize='none'
+                        ref={this.passInput}
+                        secureTextEntry
+                        onChangeText={(text) => this.props.dataExtractor('confirmPassword', text)}
+                        inputStyle={{ ...logInTextinputStyle, marginLeft: "20%" }}
+                        placeholder='Confirm password'
+                    />
+                </View>
             </View>
         )
     }
 }
-
-AppRegistry.registerComponent('tooltip', () => tooltip);

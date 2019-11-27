@@ -25,7 +25,9 @@ const config = {
 class App extends Component {
   constructor () {
     super();
+    
     firebase.initializeApp(config)
+    
   }
 
 

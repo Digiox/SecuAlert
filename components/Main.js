@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import MenuButton from "./MenuButton";
 import { connect } from 'react-redux';
 import firebase from "firebase";
+import registerForPushNotificationsAsync from "../functions/registerForPushNotificationsAsync"
 
  
 class Main extends Component {
@@ -20,6 +21,11 @@ class Main extends Component {
       } else {
         this.props.navigation.navigate("LogIn")
       }
+              registerForPushNotificationsAsync().then(res => {
+                console.log("success");
+              }).catch(err => {
+                console.log(err);
+              })
     });
   }
   

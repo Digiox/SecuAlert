@@ -5,7 +5,7 @@ import axios from "axios"
 
 
 
-const PUSH_ENDPOINT = 'http://192.168.1.19:3000/push-token';
+const PUSH_ENDPOINT = 'https://agile-everglades-79741.herokuapp.com/push-token';
 
 export default async function registerForPushNotificationsAsync() {
     const user = firebase.auth().currentUser;
